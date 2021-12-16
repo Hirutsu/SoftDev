@@ -1,0 +1,6 @@
+G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.csproj.CoreCompileInputs.cache
+G:\GIT\CustomDictionary\CustomDictionary\bin\Debug\CustomDictionary.exe.config
+G:\GIT\CustomDictionary\CustomDictionary\bin\Debug\CustomDictionary.exe
+G:\GIT\CustomDictionary\CustomDictionary\bin\Debug\CustomDictionary.pdb
+G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.exe
+G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.pdb
