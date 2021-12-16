@@ -14,11 +14,12 @@ namespace CustomDictionary
             dict.Add(-1, -1);
             dict.Add(1, -1);
             dict.Add(9, -1);
-            dict[10] = 34;
+
             foreach (var item in dict)
             {
                 Console.WriteLine(item.Key + " " + item.Value);
             }
+
             Console.WriteLine("Список ключей");
             List<int> list = new List<int>(dict.Keys);
             foreach (var item in list)
@@ -26,6 +27,7 @@ namespace CustomDictionary
                 Console.Write(item+" ");
             }
             Console.WriteLine();
+
             Console.WriteLine("Список значений");
             list = new List<int>(dict.Values);
             foreach (var item in list)
@@ -33,6 +35,7 @@ namespace CustomDictionary
                 Console.Write(item + " ");
             }
             Console.WriteLine();
+
             Console.WriteLine("После удаление 9-ого элемента");
             dict.Remove(9);
             foreach (var item in dict)
@@ -40,6 +43,7 @@ namespace CustomDictionary
                 Console.WriteLine(item.Key + " " + item.Value);
             }
             Console.WriteLine();
+
             Console.WriteLine("Список ключей");
             list = new List<int>(dict.Keys);
             foreach (var item in list)
@@ -47,6 +51,7 @@ namespace CustomDictionary
                 Console.Write(item + " ");
             }
             Console.WriteLine();
+
             Console.WriteLine("Список значений");
             list = new List<int>(dict.Values);
             foreach (var item in list)
@@ -54,9 +59,14 @@ namespace CustomDictionary
                 Console.Write(item + " ");
             }
             Console.WriteLine();
-            Console.WriteLine("Значение ключа 10:" + dict[10]);
+
+            Console.WriteLine("Значение ключа -1:" + dict[-1]);
+
             Console.WriteLine("Кол-во элементов: " + dict.Count);
 
+            KeyValuePair<int, int> it = new KeyValuePair<int, int>(-1,-1);
+
+            Console.WriteLine("-"+dict.Contains(it));
         }
     }
 }

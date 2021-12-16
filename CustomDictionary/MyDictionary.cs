@@ -55,9 +55,17 @@ namespace CustomDictionary
         public TValue GetValue(TKey key)
         {
             var hash = GetHashValue(key);
-            return _items[hash] == null ? default(TValue) :
-                _items[hash].First(m => m.Key.Equals(key)).Value;
+            if (_items[hash] == null)
+            {
+                throw new Exception("NO FOUND KEY");
+            }
+            else 
+            {
+                return _items[hash].First(m => m.Key.Equals(key)).Value;
+            }
         }
+
+
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             return (from collections in _items
@@ -83,13 +91,20 @@ namespace CustomDictionary
 
         public void Clear()
         {
+            _keys = new List<TKey>();
+            _values = new List<TValue>();
             _items = new LinkedList<KeyValuePair<TKey, TValue>>[15];
             _count = 0;
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            return ContainsKey(item.Key);
+            int hash = Math.Abs(item.Key.GetHashCode()) % _items.Length;
+            if (_items[hash].Count != 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
@@ -99,39 +114,53 @@ namespace CustomDictionary
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
-            return Remove(item.Key);
-        }
-
-        public bool Remove(TKey key)
-        {
-            int hash = Math.Abs(key.GetHashCode()) % _items.Length;
-            if (_items[hash].Count == 0)
+            int hash = Math.Abs(item.Key.GetHashCode()) % _items.Length;
+            if(_items[hash] == null)
             {
-                return false;
+                throw new Exception("Not found item in dictionary");
             }
             else
             {
-                KeyValuePair<TKey, TValue> temp = default;
-                foreach (var item in _items[hash])
-                {
-                    if (item.Key.Equals(key))
-                    {
-                        _keys.Remove(key);
-                        _values.Remove(item.Value);
-                        _count--;
-                        temp = item;
-                    }
-                }
-                if (temp.Equals((KeyValuePair<TKey, TValue>)default))
+                if (_items[hash].Count == 0)
                 {
                     return false;
                 }
                 else
                 {
-                    _items[hash].Remove(temp);
+                    return _items[hash].Remove(item);
                 }
-                return true;
             }
+        }
+
+        public bool Remove(TKey key)
+        {
+            int hash = Math.Abs(key.GetHashCode()) % _items.Length;
+            if (_items[hash] == null)
+            {
+                throw new Exception("Not found item in dictionary");
+            }
+            else
+            {
+                if (_items[hash].Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (var item in _items[hash])
+                    {
+                        if (item.Key.Equals(key))
+                        {
+                            _items[hash].Remove(item);
+                            _keys.Remove(key);
+                            _values.Remove(item.Value);
+                            _count--;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
@@ -161,15 +190,36 @@ namespace CustomDictionary
         {
             get
             {
-                int h = GetHashValue(key);
-                if (_items[h] == null) throw new KeyNotFoundException("Keys not found");
-                return _items[h].FirstOrDefault(p => p.Key.Equals(key)).Value;
+                int hash = GetHashValue(key);
+                if (_items[hash] == null) throw new KeyNotFoundException("Keys not found");
+                if (_items[hash].Count != 0)
+                {
+                    foreach (var item in _items[hash])
+                    {
+                        if (item.Key.Equals(key))
+                        {
+                            return item.Value;
+                        }
+                    }
+                }
+                return (TValue)default;
             }
             set
             {
-                int h = GetHashValue(key);
-                _items[h] = new LinkedList<KeyValuePair<TKey, TValue>>();
-                _items[h].AddLast(new KeyValuePair<TKey, TValue> (key, value));
+                int hash = GetHashValue(key);
+                if (_items[hash].Count != 0)
+                {
+                    var temp = new KeyValuePair<TKey, TValue>();
+                    foreach (var item in _items[hash])
+                    {
+                        if (item.Key.Equals(key))
+                        {
+                            temp = item;
+                        }
+                    }
+                    _items[hash].Remove(temp);
+                    _items[hash].AddLast(new KeyValuePair<TKey, TValue>(temp.Key, value));
+                }
             }
         }
     }

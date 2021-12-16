@@ -4,3 +4,4 @@ G:\GIT\CustomDictionary\CustomDictionary\bin\Debug\CustomDictionary.exe
 G:\GIT\CustomDictionary\CustomDictionary\bin\Debug\CustomDictionary.pdb
 G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.exe
 G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.pdb
+G:\GIT\CustomDictionary\CustomDictionary\obj\Debug\CustomDictionary.csproj.AssemblyReference.cache
