@@ -12,14 +12,14 @@ namespace CustomDictionary
         private List<TKey> _keys;
         private List<TValue> _values;
         private LinkedList<KeyValuePair<TKey, TValue>>[] _items;
-        private int _capacity;
+        private int _count;
         public Dict()
         {
             _keys = new List<TKey>();
             _values = new List<TValue>();
             _items = new LinkedList<KeyValuePair<TKey, TValue>>[15];
         }
-        public int Count => _capacity;
+        public int Count => _count;
 
         public bool IsReadOnly => false;
 
@@ -43,7 +43,7 @@ namespace CustomDictionary
             _items[hash].AddLast(newValue);
             _keys.Add(key);
             _values.Add(val);
-            _capacity++;
+            _count++;
         }
 
         public bool ContainsKey(TKey key)
@@ -84,7 +84,7 @@ namespace CustomDictionary
         public void Clear()
         {
             _items = new LinkedList<KeyValuePair<TKey, TValue>>[15];
-            _capacity = 0;
+            _count = 0;
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
@@ -118,6 +118,7 @@ namespace CustomDictionary
                     {
                         _keys.Remove(key);
                         _values.Remove(item.Value);
+                        _count--;
                         temp = item;
                     }
                 }
